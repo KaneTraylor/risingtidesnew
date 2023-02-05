@@ -1,0 +1,6 @@
+
+var WORKER_SIGNATURE = "CS_WORKER_SIGNATURE";
+var compress = (function Lh(){return function(t,n){var i=new Response(n).body.pipeThrough(new CompressionStream("gzip")),r=new Response(i).arrayBuffer();return"base64"===t?r.then((function(t){return n=t,new Promise((function(t){var i=new FileReader;i.onload=function(n){return t(n.target.result.split(",")[1])},i.readAsDataURL(new Blob([n]))}));var n})):r}})();
+(function(){self.addEventListener("message",(function(t){var n=t.data,i=n[0],r=n[1],s=n[2],e=n[3];if(i===WORKER_SIGNATURE){var u=compress(r,s);u.then?u.then((function(t){return self.postMessage([WORKER_SIGNATURE,e,t])})):self.postMessage([WORKER_SIGNATURE,e,u])}}))})()
+
+//compression algo
